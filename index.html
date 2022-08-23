@@ -1,0 +1,14 @@
+---
+layout: default
+stylesheets:
+    - path: "/assets/css/home.css"
+---
+
+<ul>
+    {% for toot_hash in site.data.toots %}
+    {% assign toot = toot_hash[1] %}
+      <li>
+        {{ toot.content }}
+      </li>
+    {% endfor %}
+</ul>

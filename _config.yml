@@ -1,0 +1,18 @@
+timezone: Etc/UTC
+
+sass:
+  style: compressed
+
+defaults:
+  - scope:
+      path: assets/img
+    values:
+      image: true
+
+exclude:
+  - README.md
+  - run.sh
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-target-blank
