@@ -22,19 +22,17 @@ jobs:
     #       # not yet support server-to-server page builds.
     #       USER_TOKEN: ${{ secrets.USER_TOKEN }}
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        with:
-          repository: frederikstroem/toots
-          token: ${{ secrets.GH_TOKEN }}
 
       - name: Pull & update submodules recursively
         run: |
           git submodule update --init --recursive
           git submodule update --recursive --remote
-      - name: Commit
+
+      - name: Commit & push changes
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions - update submodules"
-          git add --all
-          git commit -m "Update submodules" || echo "No changes to commit"
+          git commit -am "Update submodules"
           git push
