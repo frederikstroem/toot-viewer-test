@@ -24,8 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: org/parent_repository
-          token: ${{ secrets.PRIVATE_TOKEN_GITHUB }}
+          repository: frederikstroem/toots
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Pull & update submodules recursively
         run: |
