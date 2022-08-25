@@ -5,11 +5,12 @@ stylesheets:
 ---
 
 <ul>
-    {% for toot_hash in site.data.toots %}
+  {% assign toots = site.data.toots | sort %}
+  {% for toot_hash in toots reversed %}
     {% assign toot = toot_hash[1] %}
-      <li>
-        <a href="{{ toot.url }}" target="_blank">TOOT from {{ toot.created_at }} - TOOT has {{ toot.favourites_count }} like(s)</a>
-        {{ toot.content }}
-      </li>
-    {% endfor %}
+    <li>
+      <a href="{{ toot.url }}" target="_blank">TOOT from {{ toot.created_at }} - TOOT has {{ toot.favourites_count }} like(s)</a>
+      {{ toot.content }}
+    </li>
+  {% endfor %}
 </ul>
