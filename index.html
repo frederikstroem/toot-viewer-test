@@ -8,6 +8,7 @@ stylesheets:
     {% for toot_hash in site.data.toots %}
     {% assign toot = toot_hash[1] %}
       <li>
+        <a href="{{ toot.url }}" target="_blank">TOOT from {{ toot.created_at }} - TOOT has {{ toot.favourites_count }} like(s)</a>
         {{ toot.content }}
       </li>
     {% endfor %}

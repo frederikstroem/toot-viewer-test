@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+    {% for stylesheet in page.stylesheets %}
+      <link rel="stylesheet" href="{{ stylesheet.path | relative_url }}" />
+    {% endfor %}
   </head>
   <body>
     <section class="primary">
