@@ -1,4 +1,5 @@
 # https://stackoverflow.com/questions/24098792/how-to-force-github-pages-build/61706020#61706020
+# https://stackoverflow.com/questions/64407333/using-github-actions-to-automatically-update-the-repos-submodules
 # File: .github/workflows/refresh.yml
 name: Refresh
 
@@ -9,13 +10,30 @@ on:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    # steps:
+    #   - name: Trigger GitHub pages rebuild
+    #     run: |
+    #       curl --fail --request POST \
+    #         --url https://api.github.com/repos/${{ github.repository }}/pages/builds \
+    #         --header "Authorization: Bearer $USER_TOKEN"
+    #     env:
+    #       # You must create a personal token with repo access as GitHub does
+    #       # not yet support server-to-server page builds.
+    #       USER_TOKEN: ${{ secrets.USER_TOKEN }}
     steps:
-      - name: Trigger GitHub pages rebuild
+      - uses: actions/checkout@v2
+        with:
+          repository: org/parent_repository
+          token: ${{ secrets.PRIVATE_TOKEN_GITHUB }}
+
+      - name: Pull & update submodules recursively
         run: |
-          curl --fail --request POST \
-            --url https://api.github.com/repos/${{ github.repository }}/pages/builds \
-            --header "Authorization: Bearer $USER_TOKEN"
-        env:
-          # You must create a personal token with repo access as GitHub does
-          # not yet support server-to-server page builds.
-          USER_TOKEN: ${{ secrets.USER_TOKEN }}
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+      - name: Commit
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions - update submodules"
+          git add --all
+          git commit -m "Update submodules" || echo "No changes to commit"
+          git push
