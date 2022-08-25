@@ -1,15 +1,13 @@
-# https://stackoverflow.com/questions/24098792/how-to-force-github-pages-build/61706020#61706020
 # https://stackoverflow.com/questions/64407333/using-github-actions-to-automatically-update-the-repos-submodules
 # File: .github/workflows/refresh.yml
-name: Refresh
+name: Update submodules
 
-# on:
-#   schedule:
-#     - cron:  '0 3 * * *' # Runs every day at 3am
-on: [push, pull_request]
+on:
+  schedule:
+    - cron:  '0 3 * * *' # Runs every day at 3am
 
 jobs:
-  refresh:
+  update-submodules:
     runs-on: ubuntu-latest
     # steps:
     #   - name: Trigger GitHub pages rebuild
